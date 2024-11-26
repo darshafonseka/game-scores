@@ -1,6 +1,5 @@
 package com.rootcode.gamescores.service;
 
-import com.rootcode.gamescores.domain.User;
 import com.rootcode.gamescores.domain.UserGame;
 
 import java.util.List;

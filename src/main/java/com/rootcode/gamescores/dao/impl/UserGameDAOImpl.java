@@ -9,12 +9,15 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @Repository
 public class UserGameDAOImpl implements UserGameDAO {
 
     @PersistenceContext
     private EntityManager em;
+
+    Logger logger = Logger.getLogger(getClass().getName());
 
     @Override
     public void saveUserGame(UserGame userGame) {
@@ -25,7 +28,7 @@ public class UserGameDAOImpl implements UserGameDAO {
                 em.merge(userGame);
             }
         } catch (Exception e) {
-            System.err.println("Error saving userGame: " + e.getMessage());
+            logger.info("Error saving userGame: " + e.getMessage());
         }
     }
 
@@ -38,7 +41,7 @@ public class UserGameDAOImpl implements UserGameDAO {
                     .setParameter("gameId", gameId)
                     .getSingleResult();
         } catch (Exception e) {
-            System.err.println("Error finding highest score for given user and game: " + e.getMessage());
+            logger.info("Error finding highest score for given user and game: " + e.getMessage());
             return null;
         }
     }
@@ -52,7 +55,7 @@ public class UserGameDAOImpl implements UserGameDAO {
                     .setMaxResults(10)
                     .getResultList();
         } catch (Exception e) {
-            System.err.println("Error finding top scores: " + e.getMessage());
+            logger.info("Error finding top scores: " + e.getMessage());
             throw new RuntimeException("Failed to find top scores", e);
         }
     }
@@ -68,7 +71,7 @@ public class UserGameDAOImpl implements UserGameDAO {
                     .findFirst()
                     .orElse(null); // Return null if no score is found
         } catch (Exception e) {
-            System.err.println("Error finding score for user and game: " + e.getMessage());
+            logger.info("Error finding score for user and game: " + e.getMessage());
             return null; // Return null if there's an error
         }
     }

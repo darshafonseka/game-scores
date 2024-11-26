@@ -1,5 +1,6 @@
 package com.rootcode.gamescores.service.impl;
 
+import com.rootcode.gamescores.constant.UserGameConstants;
 import com.rootcode.gamescores.dao.GameDAO;
 import com.rootcode.gamescores.dao.UserDAO;
 import com.rootcode.gamescores.dao.UserGameDAO;
@@ -27,11 +28,11 @@ public class UserGameServiceImpl implements UserGameService {
         // Validate the user and game exist
         User user = userDAO.findById(userId);
         if (user == null) {
-            throw new RuntimeException("User Not Found");
+            throw new RuntimeException(UserGameConstants.USER_NOT_FOUND_MESSAGE);
         }
         Game game = gameDAO.findById(gameId);
         if (game == null) {
-            throw new RuntimeException("Game Not Found");
+            throw new RuntimeException(UserGameConstants.GAME_NOT_FOUND_MESSAGE);
         }
 
         // check if there's already a score for the user in this game
@@ -57,11 +58,11 @@ public class UserGameServiceImpl implements UserGameService {
             // get the highest score for the user and game
             User user = userDAO.findById(userId);
             if (user == null) {
-                throw new RuntimeException("User Not Found");
+                throw new RuntimeException(UserGameConstants.USER_NOT_FOUND_MESSAGE);
             }
             Game game = gameDAO.findById(gameId);
             if (game == null) {
-                throw new RuntimeException("Game Not Found");
+                throw new RuntimeException(UserGameConstants.GAME_NOT_FOUND_MESSAGE);
             }
             Integer highestScore = userGameDAO.findHighestScoreByUserAndGame(userId, gameId);
 
@@ -76,7 +77,7 @@ public class UserGameServiceImpl implements UserGameService {
 
         Game game = gameDAO.findById(gameId);
         if (game == null) {
-            throw new RuntimeException("Game Not Found");
+            throw new RuntimeException(UserGameConstants.GAME_NOT_FOUND_MESSAGE);
         }
 
         List<UserGame> userGameList = userGameDAO.findTopScoresByGame(gameId);

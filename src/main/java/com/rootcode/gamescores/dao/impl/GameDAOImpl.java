@@ -6,18 +6,22 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
+import java.util.logging.Logger;
+
 @Repository
 public class GameDAOImpl implements GameDAO {
 
     @PersistenceContext
     private EntityManager em;
 
+    Logger logger = Logger.getLogger(getClass().getName());
+
     @Override
     public Game findById(Integer id) {
         try {
             return em.find(Game.class, id);
         } catch (Exception e) {
-            System.err.println("Error fetching game: " + e.getMessage());
+            logger.info("Error fetching game: " + e.getMessage());
             return null;
         }
     }
@@ -31,7 +35,7 @@ public class GameDAOImpl implements GameDAO {
                 em.merge(game);
             }
         } catch (Exception e) {
-            System.err.println("Error saving game: " + e.getMessage());
+            logger.info("Error saving game: " + e.getMessage());
         }
     }
 }

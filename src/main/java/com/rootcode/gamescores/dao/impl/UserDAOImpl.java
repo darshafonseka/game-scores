@@ -6,18 +6,22 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
+import java.util.logging.Logger;
+
 @Repository
 public class UserDAOImpl implements UserDAO {
 
     @PersistenceContext
     private EntityManager em;
 
+    Logger logger = Logger.getLogger(getClass().getName());
+
     @Override
     public User findById(Integer id) {
         try {
             return em.find(User.class, id);
         } catch (Exception e) {
-            System.err.println("Error fetching user: " + e.getMessage());
+            logger.info("Error fetching user: " + e.getMessage());
             return null;
         }
     }
@@ -31,7 +35,7 @@ public class UserDAOImpl implements UserDAO {
                 em.merge(user);
             }
         } catch (Exception e) {
-            System.err.println("Error saving user: " + e.getMessage());
+            logger.info("Error saving user: " + e.getMessage());
         }
     }
 
