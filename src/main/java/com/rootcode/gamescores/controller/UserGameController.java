@@ -4,6 +4,7 @@ import com.rootcode.gamescores.domain.UserGame;
 import com.rootcode.gamescores.dto.RequestDTO;
 import com.rootcode.gamescores.service.UserGameService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +39,7 @@ public class UserGameController {
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("An unexpected error occurred " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred " + e.getMessage());
         }
     }
 
@@ -51,7 +52,7 @@ public class UserGameController {
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("An unexpected error occurred " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred " + e.getMessage());
         }
     }
 
