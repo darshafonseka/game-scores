@@ -11,6 +11,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserGameServiceImpl implements UserGameService {
@@ -69,6 +71,20 @@ public class UserGameServiceImpl implements UserGameService {
             return highestScore;
         }
 
+     // This method is used to get the the top 10 scores for a given game id
+    public List<UserGame> getTopScores(Integer gameId) {
+
+        Game game = gameDAO.findById(gameId);
+        if (game == null) {
+            throw new RuntimeException("Game Not Found");
+        }
+
+        List<UserGame> userGameList = userGameDAO.findTopScoresByGame(gameId);
+        if(userGameList.isEmpty()) {
+            throw new RuntimeException("No Top Scores found for the given game");
+        }
+        return userGameDAO.findTopScoresByGame(gameId);
+    }
 
 }
 
