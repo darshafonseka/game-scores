@@ -1,7 +1,9 @@
 package com.rootcode.gamescores.controller;
 
+import com.rootcode.gamescores.constant.UserGameConstants;
 import com.rootcode.gamescores.domain.UserGame;
 import com.rootcode.gamescores.dto.RequestDTO;
+import com.rootcode.gamescores.dto.ResponseDTO;
 import com.rootcode.gamescores.service.UserGameService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,12 +20,12 @@ public class UserGameController {
     private final UserGameService userGameService;
 
     @PostMapping
-    public ResponseEntity<String> saveUserGameScore(@RequestBody RequestDTO.SaveGameScoreRequestDTO request) {
+    public ResponseEntity<ResponseDTO> saveUserGameScore(@RequestBody RequestDTO.SaveGameScoreRequestDTO request) {
         try {
             userGameService.saveUserScore(request.getUserId(), request.getGameId(), request.getScore());
-            return ResponseEntity.ok("User Game Score saved successfully");
+            return ResponseEntity.ok(new ResponseDTO("success", "User Game Score saved successfully"));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(new ResponseDTO("error", e.getMessage()));
         }
     }
 
